@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Product
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore"
+    name="cdo-explorer"
+    label="CDO Explorer">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="folderName">
+      <value>eclipse</value>
+    </detail>
+    <detail
+        key="folderName.macosx">
+      <value>Eclipse</value>
+    </detail>
+  </annotation>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="CDO Explorer">
+    <requirement
+        name="epp.package.java"/>
+    <requirement
+        name="org.eclipse.platform.feature.group"/>
+    <requirement
+        name="org.eclipse.rcp.feature.group"/>
+    <requirement
+        name="org.eclipse.jdt.feature.group"/>
+    <requirement
+        name="org.eclipse.pde.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.cdo.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.cdo.examples.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.cdo.examples.installer.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.cdo.migrator.feature.group"/>
+    <requirement
+        name="org.eclipse.net4j.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:ResourceCopyTask"
+      id="splash"
+      sourceURL="http://download.eclipse.org/modeling/emf/cdo/images/CDOExplorer-Splash.bmp"
+      targetURL="${installation.location|uri}/eclipse/splash.bmp"/>
+  <setupTask
+      xsi:type="setup:ResourceCreationTask"
+      id="plugin.customization.ini"
+      excludedTriggers="STARTUP MANUAL"
+      targetURL="${installation.location|uri}/${installation.relativeProductFolder}/plugin_customization.ini">
+    <content>
+      org.eclipse.ui/defaultPerspectiveId=org.eclipse.emf.cdo.explorer.ui.CDOExplorerPerspective
+
+    </content>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Workaround for empty Project Explorer (bug 553353)">
+    <setupTask
+        xsi:type="setup:ResourceCreationTask"
+        id="dummy.project"
+        excludedTriggers="BOOTSTRAP"
+        targetURL="${osgi.instance.area}/Dummy/.project">
+      <content>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+        &lt;projectDescription>
+        	&lt;name>Dummy&lt;/name>
+        	&lt;comment>&lt;/comment>
+        	&lt;projects>
+        	&lt;/projects>
+        	&lt;buildSpec>
+        	&lt;/buildSpec>
+        	&lt;natures>
+        	&lt;/natures>
+        &lt;/projectDescription>
+
+      </content>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${osgi.instance.area|file/Dummy}"/>
+    </setupTask>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Xmx"
+      value="1g"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-showSplash"
+      value="${splash.targetURL|file}"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      excludedTriggers="STARTUP MANUAL"
+      option="-pluginCustomization"
+      value="${plugin.customization.ini.targetURL|file}"/>
+  <version name="latest.release"
+      label="Latest Release"
+      requiredJavaVersion="11">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+      <detail
+          key="siteURI">
+        <value>https://www.eclipse.org/cdo/downloads/#integration</value>
+      </detail>
+    </annotation>
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <repository
+          url="http://download.eclipse.org/technology/epp/packages/latest"/>
+      <repository
+          url="https://download.eclipse.org/releases/latest"/>
+      <repository
+          url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+      <repository
+          url="https://download.eclipse.org/nebula/releases/latest"/>
+      <repository
+          url="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest"/>
+    </setupTask>
+  </version>
+  <description>A CDO Model Repository client.</description>
+</setup:Product>

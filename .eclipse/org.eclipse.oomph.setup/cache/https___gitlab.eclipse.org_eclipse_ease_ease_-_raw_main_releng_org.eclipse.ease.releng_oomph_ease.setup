@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
+    xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    name="ease"
+    label="EASE">
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Preferences">
+    <setupTask
+        xsi:type="setup:ResourceCreationTask"
+        excludedTriggers="STARTUP MANUAL"
+        targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml"
+        encoding="UTF-8">
+      <description>Initialize JDT's package explorer to show working sets as its root objects</description>
+      <content>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+        &lt;section name=&quot;Workbench&quot;>
+        	&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>
+        		&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>
+        		&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>
+        		&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>
+        		&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>
+        		&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>
+        	&lt;/section>
+        &lt;/section>
+
+      </content>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.core.resources">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.core.resources/refresh.enabled"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.core.resources/encoding"
+          value="UTF-8"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.pde.api.tools">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile"
+          value="Ignore"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.jdt.launching">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
+          value="ignore"/>
+    </setupTask>
+    <description></description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Install IDE Plug-ins">
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Target Platform Definition Editor">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.cbi.targetplatform-feature.feature.group"/>
+        <repository
+            url="http://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/"/>
+        <description>Install tpd editor</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Checkstyle">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="net.sf.eclipsecs.feature.group"/>
+        <repository
+            url="https://checkstyle.org/eclipse-cs-update-site"/>
+        <description>Install tpd editor</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Spotbugs">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="com.github.spotbugs.plugin.eclipse.feature.group"/>
+        <repository
+            url="https://spotbugs.github.io/eclipse/"/>
+        <description>Install tpd editor</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="PMD">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="ch.acanda.eclipse.pmd.feature.feature.group"/>
+        <repository
+            url="https://eclipse-pmd.acanda.ch/release/latest/"/>
+        <description>Install tpd editor</description>
+      </setupTask>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Jenkins Editor">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="de.jcup.jenkinseditor.feature.feature.group"/>
+        <repository
+            url="https://de-jcup.github.io/update-site-eclipse-jenkins-editor/update-site/"/>
+      </setupTask>
+    </setupTask>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Global Variables">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eclipse.gitlab.remoteURIs">
+      <choice
+          value="ssh:/git@gitlab.eclipse.org:eclipse/ease/@{remoteURI}.git"
+          label="SSH (read-write)">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+      </choice>
+      <choice
+          value="https://gitlab.eclipse.org/eclipse/ease/@{remoteURI}.git"
+          label="HTTPS (read-write)">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+      </choice>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eclipse.gitlab.uri.pattern"
+        value="(https|ssh)://(git@)gitlab.eclipse.org/eclipse/ease/.*"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="eclipse.target.platform"
+      defaultValue="2023-09"
+      storageURI="scope://Workspace">
+    <description>Default target platform for EASE development.</description>
+  </setupTask>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="ease.git.clone"
+      remoteURI="ease/ease"
+      checkoutBranch="main">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/InducedChoices">
+      <detail
+          key="inherit">
+        <value>gitlab.remoteURIs</value>
+      </detail>
+      <detail
+          key="label">
+        <value>${scope.project.label} Git repository</value>
+      </detail>
+      <detail
+          key="target">
+        <value>remoteURI</value>
+      </detail>
+    </annotation>
+    <description>${scope.project.label}</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:ResourceCreationTask"
+      excludedTriggers="STARTUP MANUAL"
+      targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.debug.core/.launches/EASE.launch"
+      encoding="UTF-8">
+    <description>Create a default launch configuration for EASE</description>
+    <content>
+      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?>
+      &lt;launchConfiguration type=&quot;org.eclipse.pde.ui.RuntimeWorkbench&quot;>
+      &lt;booleanAttribute key=&quot;append.args&quot; value=&quot;true&quot;/>
+      &lt;booleanAttribute key=&quot;askclear&quot; value=&quot;true&quot;/>
+      &lt;booleanAttribute key=&quot;automaticAdd&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;automaticValidate&quot; value=&quot;true&quot;/>
+      &lt;stringAttribute key=&quot;bootstrap&quot; value=&quot;&quot;/>
+      &lt;stringAttribute key=&quot;checked&quot; value=&quot;[NONE]&quot;/>
+      &lt;booleanAttribute key=&quot;clearConfig&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;clearws&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;clearwslog&quot; value=&quot;false&quot;/>
+      &lt;stringAttribute key=&quot;configLocation&quot; value=&quot;$${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/EASE&quot;/>
+      &lt;booleanAttribute key=&quot;default&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;includeOptional&quot; value=&quot;true&quot;/>
+      &lt;stringAttribute key=&quot;location&quot; value=&quot;$${workspace_loc}/../runtime-ease&quot;/>
+      &lt;stringAttribute key=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; value=&quot;org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8&quot;/>
+      &lt;stringAttribute key=&quot;org.eclipse.jdt.launching.PROGRAM_ARGUMENTS&quot; value=&quot;-os $${target.os} -ws $${target.ws} -arch $${target.arch} -nl $${target.nl} -consolelog&quot;/>
+      &lt;stringAttribute key=&quot;org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER&quot; value=&quot;org.eclipse.pde.ui.workbenchClasspathProvider&quot;/>
+      &lt;stringAttribute key=&quot;org.eclipse.jdt.launching.VM_ARGUMENTS&quot; value=&quot;-Xms40m -Xmx1024M -ea&quot;/>
+      &lt;booleanAttribute key=&quot;pde.generated.config&quot; value=&quot;false&quot;/>
+      &lt;stringAttribute key=&quot;pde.version&quot; value=&quot;3.3&quot;/>
+      &lt;stringAttribute key=&quot;product&quot; value=&quot;org.eclipse.platform.ide&quot;/>
+      &lt;stringAttribute key=&quot;selected_target_plugins&quot; value=&quot;com.google.gson@default:default,com.google.guava@default:default,com.google.javascript@default:default,com.google.protobuf@default:default,com.ibm.icu@default:default,com.jcraft.jsch@default:default,javaewah@default:default,javax.annotation@default:default,javax.el@default:default,javax.inject@default:default,javax.servlet.jsp@default:default,javax.servlet@default:default,net.i2p.crypto.eddsa@default:default,org.apache.ant@default:default,org.apache.batik.constants@default:default,org.apache.batik.css*1.11.0.v20190515-0436@default:default,org.apache.batik.i18n@default:default,org.apache.batik.util*1.11.0.v20190515-0436@default:default,org.apache.batik.util.gui@default:default,org.apache.commons.io@default:default,org.apache.commons.jxpath@default:default,org.apache.commons.logging@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.scr@1:true,org.apache.jasper.glassfish@default:default,org.apache.log4j@default:default,org.apache.lucene.analyzers-common@default:default,org.apache.lucene.analyzers-smartcn@default:default,org.apache.lucene.core@default:default,org.apache.sshd.osgi@default:default,org.apache.sshd.sftp@default:default,org.apache.xmlgraphics@default:default,org.bouncycastle.bcpg@default:default,org.bouncycastle.bcprov@default:default,org.codehaus.groovy@default:default,org.eclipse.ant.core@default:default,org.eclipse.compare.core@default:default,org.eclipse.compare@default:default,org.eclipse.core.commands@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.beans@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.databinding@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filebuffers@default:default,org.eclipse.core.filesystem.linux.x86_64@default:false,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.net.linux.x86_64@default:false,org.eclipse.core.net@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.variables@default:default,org.eclipse.debug.core@default:default,org.eclipse.debug.ui@default:default,org.eclipse.draw2d@default:default,org.eclipse.e4.core.commands@default:default,org.eclipse.e4.core.contexts@default:default,org.eclipse.e4.core.di.annotations@default:default,org.eclipse.e4.core.di.extensions.supplier@default:default,org.eclipse.e4.core.di.extensions@default:default,org.eclipse.e4.core.di@default:default,org.eclipse.e4.core.services@default:default,org.eclipse.e4.emf.xpath@default:default,org.eclipse.e4.tools.bundle.spy@default:default,org.eclipse.e4.tools.context.spy@default:default,org.eclipse.e4.tools.emf.ui@default:default,org.eclipse.e4.tools.event.spy@default:default,org.eclipse.e4.tools.model.spy@default:default,org.eclipse.e4.tools.services@default:default,org.eclipse.e4.tools.spy@default:default,org.eclipse.e4.ui.bindings@default:default,org.eclipse.e4.ui.css.core@default:default,org.eclipse.e4.ui.css.swt.theme@default:default,org.eclipse.e4.ui.css.swt@default:default,org.eclipse.e4.ui.di@default:default,org.eclipse.e4.ui.dialogs@default:default,org.eclipse.e4.ui.model.workbench@default:default,org.eclipse.e4.ui.services@default:default,org.eclipse.e4.ui.swt.gtk@default:false,org.eclipse.e4.ui.widgets@default:default,org.eclipse.e4.ui.workbench.addons.swt@default:default,org.eclipse.e4.ui.workbench.renderers.swt@default:default,org.eclipse.e4.ui.workbench.swt@default:default,org.eclipse.e4.ui.workbench3@default:default,org.eclipse.e4.ui.workbench@default:default,org.eclipse.ecf.filetransfer@default:default,org.eclipse.ecf.identity@default:default,org.eclipse.ecf.provider.filetransfer.ssl@default:false,org.eclipse.ecf.provider.filetransfer@default:default,org.eclipse.ecf.ssl@default:false,org.eclipse.ecf@default:default,org.eclipse.egit.core@default:default,org.eclipse.egit.ui@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.databinding.edit@default:default,org.eclipse.emf.databinding@default:default,org.eclipse.emf.ecore.change@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.edit@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.bidi@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.concurrent@default:default,org.eclipse.equinox.event@default:default,org.eclipse.equinox.frameworkadmin.equinox@default:default,org.eclipse.equinox.frameworkadmin@default:default,org.eclipse.equinox.http.jetty@default:default,org.eclipse.equinox.http.registry@default:default,org.eclipse.equinox.http.servlet@default:default,org.eclipse.equinox.jsp.jasper.registry@default:default,org.eclipse.equinox.jsp.jasper@default:default,org.eclipse.equinox.p2.artifact.repository@default:default,org.eclipse.equinox.p2.core@default:default,org.eclipse.equinox.p2.director.app@default:default,org.eclipse.equinox.p2.director@default:default,org.eclipse.equinox.p2.engine@default:default,org.eclipse.equinox.p2.garbagecollector@default:default,org.eclipse.equinox.p2.jarprocessor@default:default,org.eclipse.equinox.p2.metadata.repository@default:default,org.eclipse.equinox.p2.metadata@default:default,org.eclipse.equinox.p2.operations@default:default,org.eclipse.equinox.p2.publisher.eclipse@default:default,org.eclipse.equinox.p2.publisher@default:default,org.eclipse.equinox.p2.repository.tools@default:default,org.eclipse.equinox.p2.repository@default:default,org.eclipse.equinox.p2.touchpoint.eclipse@default:default,org.eclipse.equinox.p2.transport.ecf@default:default,org.eclipse.equinox.p2.ui@default:default,org.eclipse.equinox.p2.updatesite@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.security.linux.x86_64@default:false,org.eclipse.equinox.security.ui@default:default,org.eclipse.equinox.security@default:default,org.eclipse.equinox.simpleconfigurator.manipulator@default:default,org.eclipse.equinox.simpleconfigurator@1:true,org.eclipse.equinox.util@default:default,org.eclipse.help.base@default:default,org.eclipse.help.ui@default:default,org.eclipse.help.webapp@default:default,org.eclipse.help@default:default,org.eclipse.jdt.core.manipulation@default:default,org.eclipse.jdt.core@default:default,org.eclipse.jdt.debug.ui@default:default,org.eclipse.jdt.debug@default:default,org.eclipse.jdt.launching@default:default,org.eclipse.jdt.ui@default:default,org.eclipse.jetty.http@default:default,org.eclipse.jetty.io@default:default,org.eclipse.jetty.security@default:default,org.eclipse.jetty.server@default:default,org.eclipse.jetty.servlet@default:default,org.eclipse.jetty.util@default:default,org.eclipse.jface.databinding@default:default,org.eclipse.jface.text@default:default,org.eclipse.jface@default:default,org.eclipse.jgit.ssh.apache@default:default,org.eclipse.jgit@default:default,org.eclipse.jsch.core@default:default,org.eclipse.ltk.core.refactoring@default:default,org.eclipse.ltk.ui.refactoring@default:default,org.eclipse.nebula.visualization.xygraph@default:default,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi.util@default:default,org.eclipse.osgi@-1:true,org.eclipse.pde.build@default:default,org.eclipse.pde.core@default:default,org.eclipse.search@default:default,org.eclipse.swt.gtk.linux.x86_64@default:false,org.eclipse.swt@default:default,org.eclipse.team.core@default:default,org.eclipse.team.svn.core@default:default,org.eclipse.team.svn.ui@default:default,org.eclipse.team.svn@default:default,org.eclipse.team.ui@default:default,org.eclipse.text@default:default,org.eclipse.ui.browser@default:default,org.eclipse.ui.cheatsheets@default:default,org.eclipse.ui.console@default:default,org.eclipse.ui.editors@default:default,org.eclipse.ui.forms@default:default,org.eclipse.ui.genericeditor@default:default,org.eclipse.ui.ide.application@default:default,org.eclipse.ui.ide@default:default,org.eclipse.ui.intro.quicklinks@default:default,org.eclipse.ui.intro.universal@default:default,org.eclipse.ui.intro@default:default,org.eclipse.ui.navigator.resources@default:default,org.eclipse.ui.navigator@default:default,org.eclipse.ui.trace@default:default,org.eclipse.ui.views.properties.tabbed@default:default,org.eclipse.ui.views@default:default,org.eclipse.ui.workbench.texteditor@default:default,org.eclipse.ui.workbench@default:default,org.eclipse.ui@default:default,org.eclipse.update.configurator@3:true,org.eclipse.urischeme@default:default,org.eclipse.wst.common.core@default:default,org.eclipse.wst.common.environment@default:default,org.eclipse.wst.common.frameworks@default:default,org.eclipse.wst.common.project.facet.core@default:default,org.eclipse.wst.jsdt.core@default:default,org.eclipse.wst.jsdt.debug.core@default:default,org.eclipse.wst.jsdt.debug.ui@default:default,org.eclipse.wst.jsdt.manipulation@default:default,org.eclipse.wst.jsdt.ui@default:default,org.eclipse.wst.validation@default:default,org.hamcrest.core@default:default,org.hamcrest.integration@default:default,org.hamcrest.library@default:default,org.hamcrest.text@default:default,org.hamcrest@default:default,org.junit@default:default,org.mockito@default:default,org.mozilla.javascript@default:default,org.objectweb.asm@default:default,org.objenesis@default:default,org.sat4j.core@default:default,org.sat4j.pb@default:default,org.slf4j.api@default:default,org.tukaani.xz@default:default,org.w3c.css.sac@default:default,org.w3c.dom.events@default:default,org.w3c.dom.smil@default:default,org.w3c.dom.svg@default:default&quot;/>
+      &lt;stringAttribute key=&quot;selected_workspace_plugins&quot; value=&quot;org.eclipse.ease.classloader@default:default,org.eclipse.ease.lang.groovy.interpreter@default:default,org.eclipse.ease.lang.groovy@default:default,org.eclipse.ease.lang.javascript.rhino.debugger.test@default:false,org.eclipse.ease.lang.javascript.rhino.debugger@default:default,org.eclipse.ease.lang.javascript.rhino.test@default:false,org.eclipse.ease.lang.javascript.rhino@default:default,org.eclipse.ease.lang.javascript.test@default:false,org.eclipse.ease.lang.javascript@default:default,org.eclipse.ease.lang.jvm.compiled@default:default,org.eclipse.ease.modules.charting@default:default,org.eclipse.ease.modules.jvm@default:default,org.eclipse.ease.modules.platform.test@default:false,org.eclipse.ease.modules.platform@default:default,org.eclipse.ease.modules.team.git@default:default,org.eclipse.ease.modules.team.svn@default:default,org.eclipse.ease.test@default:false,org.eclipse.ease.testhelper@default:default,org.eclipse.ease.ui.completions.java@default:false,org.eclipse.ease.ui.scripts@default:default,org.eclipse.ease.ui.test@default:false,org.eclipse.ease.ui@default:default,org.eclipse.ease@default:default&quot;/>
+      &lt;booleanAttribute key=&quot;show_selected_only&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;tracing&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;useCustomFeatures&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;useDefaultConfig&quot; value=&quot;true&quot;/>
+      &lt;booleanAttribute key=&quot;useDefaultConfigArea&quot; value=&quot;true&quot;/>
+      &lt;booleanAttribute key=&quot;useProduct&quot; value=&quot;false&quot;/>
+      &lt;booleanAttribute key=&quot;usefeatures&quot; value=&quot;false&quot;/>
+      &lt;/launchConfiguration>
+    </content>
+  </setupTask>
+  <setupTask
+      xsi:type="projects:ProjectsImportTask">
+    <sourceLocator
+        rootFolder="${ease.git.clone.location}"
+        locateNestedProjects="true">
+      <predicate
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease.integration.modeling.*examples"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease.helpgenerator.testproject"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="UnitTest"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*Path Test"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="External Project"/>
+        </operand>
+      </predicate>
+    </sourceLocator>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.workingsets:WorkingSetTask">
+    <workingSet
+        name="EASE Core Framework">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease.ui.*"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease.help"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org.eclipse.ease.classloader"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*feature"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*test"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*ease.module.*"/>
+        </operand>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="EASE Engines">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:RepositoryPredicate"
+            project="org.eclipse.ease"/>
+        <operand
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*lang.*"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*feature"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*\.test"/>
+        </operand>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="EASE Modules">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern=".*modules.*"/>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*feature"/>
+        </operand>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*test"/>
+        </operand>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="EASE Testing">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:RepositoryPredicate"
+            project="org.eclipse.ease"/>
+        <operand
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*\.test"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern=".*\.testhelper"/>
+        </operand>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="Release Engineering">
+      <predicate
+          xsi:type="predicates:OrPredicate">
+        <operand
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.ease"/>
+          <operand
+              xsi:type="predicates:OrPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*releng.*"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org.eclipse.ease.helpgenerator"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="EASE UI Design"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="EASE Developer Documentation"/>
+          </operand>
+        </operand>
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="org.eclipse.ease.releng.website"/>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="EASE Features">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:RepositoryPredicate"
+            project="org.eclipse.ease"/>
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern=".*feature"/>
+      </predicate>
+    </workingSet>
+    <description>The dynamic working sets for ${scope.project.label}</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask">
+    <targlet
+        name="${scope.project.label}"
+        activeRepositoryList="${eclipse.target.platform}">
+      <requirement
+          name="*"/>
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.py4j.feature.feature.group"
+          versionRange="0.10.8.1"
+          optional="true"/>
+      <requirement
+          name="org.python.pydev.feature.source.feature.group"/>
+      <sourceLocator
+          rootFolder="${ease.git.clone.location}">
+        <excludedPath>developers</excludedPath>
+        <excludedPath>plugins/integration</excludedPath>
+        <excludedPath>features/org.eclipse.ease.integration.modeling.papyrus.feature</excludedPath>
+        <excludedPath>features/org.eclipse.ease.integration.modeling.uml.feature</excludedPath>
+      </sourceLocator>
+      <repositoryList
+          name="2019-06">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2019-06"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-03">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2019-03"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2018-09">
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository/"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2018-09/"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-09">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2019-09"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-12">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2019-12"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2020-03">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-03"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2020-06">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-06"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2020-09">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200831200620/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-09"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2020-12">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+      </repositoryList>
+      <repositoryList
+          name="2021-06">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2021-06"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+      </repositoryList>
+      <repositoryList
+          name="2021-09">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210825222808/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2021-09"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+      </repositoryList>
+      <repositoryList
+          name="2021-12">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20211122181901/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2021-12"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+      </repositoryList>
+      <repositoryList
+          name="2022-03">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2022-03"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+      </repositoryList>
+      <repositoryList
+          name="2022-06">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220531185310/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2022-06"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+      </repositoryList>
+      <repositoryList
+          name="2022-09">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2022-09"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+      </repositoryList>
+      <repositoryList
+          name="2022-12">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2022-12"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+      </repositoryList>
+      <repositoryList
+          name="2023-03">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2023-03"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+      </repositoryList>
+      <repositoryList
+          name="2023-06">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2023-06"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+      </repositoryList>
+      <repositoryList
+          name="2023-09">
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository"/>
+        <repository
+            url="https://eclipse-ease-addons.github.io/org.eclipse.ease.engines.p2/latest"/>
+        <repository
+            url="https://download.eclipse.org/releases/2023-09"/>
+        <repository
+            url="http://eclipse.py4j.org/"/>
+        <repository
+            url="http://www.pydev.org/updates"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/subversive/4.0/update-site/"/>
+        <repository
+            url="http://download.eclipse.org/releases/2020-12"/>
+      </repositoryList>
+    </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.ease"
+      value="=https://gitlab.eclipse.org/eclipse/ease/ease/-/raw/main/releng/org.eclipse.ease.releng/oomph/ease.setup->${ease.git.clone.location|uri}/releng/org.eclipse.ease.releng/oomph/ease.setup"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Gitlab">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gitlab.user.id"
+        label="Gitlab user ID">
+      <description>The Gitlab user ID</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gitlab.author.name"
+        label="Gitlab author name"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gitlab.author.email"
+        label="Gitlab author email"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="gitlab.remoteURIs"
+        label="Gitlab repository">
+      <choice
+          value="git@gitlab.eclipse.org:eclipse/@{remoteURI}.git"
+          label="SSH (read-write)"/>
+      <choice
+          value="https://gitlab.eclipse.org/eclipse/@{remoteURI}.git"
+          label="HTTPS (read-only, anonymous)"/>
+      <choice
+          value="https://${gitlab.user.id|username}@gitlab.eclipse.org/eclipse/@{remoteURI}.git"
+          label="HTTPS (read-write)">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/MatchChoice"/>
+      </choice>
+      <description>Choose from the available Gitlab URIs</description>
+    </setupTask>
+  </setupTask>
+  <stream name="main"
+      label="Main"/>
+  <logicalProjectContainer
+      xsi:type="setup:ProjectCatalog"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <description>Setup for EASE core and modules developers.</description>
+</setup:Project>

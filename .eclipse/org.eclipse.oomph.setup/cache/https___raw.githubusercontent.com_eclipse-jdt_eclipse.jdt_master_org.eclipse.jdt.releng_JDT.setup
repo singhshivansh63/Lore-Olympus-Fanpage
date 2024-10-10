@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
+    xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
+    xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupWorkingSets.ecore"
+    name="jdt"
+    label="JDT">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/ConfigurationReference">
+    <reference
+        href="JDTConfiguration.setup#/"/>
+  </annotation>
+  <setupTask
+      xsi:type="setup.p2:P2Task">
+    <requirement
+        name="org.eclipse.jdt.junit4.runtime"/>
+    <requirement
+        name="org.eclipse.jdt.astview.feature.feature.group"
+        optional="true"/>
+    <requirement
+        name="org.eclipse.jdt.jeview.feature.feature.group"
+        optional="true"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Xmx"
+      value="4g"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:ResourceCreationTask"
+      excludedTriggers="STARTUP MANUAL"
+      targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml"
+      encoding="UTF-8"
+      documentation="Initialize the Package Explorer to display workings sets.">
+    <content>
+      &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+      &lt;section name=&quot;Workbench&quot;>
+      	&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>
+      		&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>
+      		&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>
+      		&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>
+      		&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>
+      		&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>
+      	&lt;/section>
+      &lt;/section>
+
+    </content>
+  </setupTask>
+  <setupTask
+      xsi:type="jdt:JRETask"
+      version="JavaSE-17"
+      location="${jre.location-17}"/>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="eclipse.target.platform"
+      value="${eclipse.target.platform.latest}"
+      storageURI="scope://Workspace"/>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="eclipse.api.baseline.target.platform"
+      value="${eclipse.api.baseline.target.platform.latest.released}"
+      storageURI="scope://Workspace"/>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask"
+      targetName="Modular API Baseline Target"
+      activateTarget="false">
+    <targlet
+        name="JDT"
+        activeRepositoryList="${eclipse.api.baseline.target.platform}"
+        includeSources="false">
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.feature.group"/>
+      <requirement
+          name="org.eclipse.pde.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.executable.feature.group"/>
+    </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask">
+    <targlet
+        name="JDT Platform"
+        activeRepositoryList="CBI">
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.feature.group"/>
+      <requirement
+          name="org.eclipse.pde.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.executable.feature.group"/>
+      <repositoryList
+          name="CBI">
+        <repository
+            url="https://download.eclipse.org/cbi/updates/license"/>
+      </repositoryList>
+    </targlet>
+  </setupTask>
+  <project name="features"
+      label="Features">
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="github.clone.jdt"
+        remoteURI="eclipse-jdt/eclipse.jdt"
+        userID="">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>github.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>JDT Features Github Repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <configSections
+          name="branch">
+        <properties
+            key="autoSetupRebase"
+            value="always"/>
+      </configSections>
+      <description>JDT Features</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask">
+      <targlet
+          name="JDT Features"
+          activeRepositoryList="${eclipse.target.platform}">
+        <requirement
+            name="*"/>
+        <sourceLocator
+            rootFolder="${github.clone.jdt.location}"/>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask"
+        id="jdt.workingsets">
+      <workingSet
+          name="JDT Features">
+        <predicate
+            xsi:type="predicates:RepositoryPredicate"
+            project="org.eclipse.jdt-feature"/>
+      </workingSet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.jdt"
+        value="=https://raw.githubusercontent.com/eclipse-jdt/eclipse.jdt/master/org.eclipse.jdt.releng/JDT.setup->${github.clone.jdt.location|uri}/org.eclipse.jdt.releng/JDT.setup"
+        vm="true">
+      <description>Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.</description>
+    </setupTask>
+    <stream
+        name="master"
+        label="Master"/>
+    <description>The features of the JDT project</description>
+  </project>
+  <project name="core"
+      label="Core">
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="github.clone.jdt.core"
+        remoteURI="eclipse-jdt/eclipse.jdt.core">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>github.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>JDT Core Github Repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <configSections
+          name="branch">
+        <properties
+            key="autoSetupRebase"
+            value="always"/>
+      </configSections>
+      <description>JDT Core</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask">
+      <targlet
+          name="JDT Core"
+          activeRepositoryList="${eclipse.target.platform}">
+        <requirement
+            name="*"/>
+        <sourceLocator
+            rootFolder="${github.clone.jdt.core.location}"/>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask"
+        id="jdt.core.workingsets">
+      <workingSet
+          name="JDT Core">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jdt.core"/>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*|.*examples.*|converterJcl.*"/>
+          </operand>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="JDT JCL">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jdt.core"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="converterJcl.*"/>
+        </predicate>
+      </workingSet>
+    </setupTask>
+    <project
+        name="tests"
+        label="Tests">
+      <setupTask
+          xsi:type="setup.targlets:TargletTask">
+        <targlet
+            name="JDT Core Tests"
+            activeRepositoryList="">
+          <requirement
+              name="org.eclipse.jdt.apt.pluggable.tests"/>
+          <requirement
+              name="org.eclipse.jdt.apt.tests"/>
+          <requirement
+              name="org.eclipse.jdt.compiler.tool.tests"/>
+          <requirement
+              name="org.eclipse.jdt.core.tests.performance"/>
+        </targlet>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.workingsets:WorkingSetTask"
+          id="jdt.core.tests.workingsets">
+        <workingSet
+            name="JDT Core Tests">
+          <predicate
+              xsi:type="predicates:AndPredicate">
+            <operand
+                xsi:type="predicates:RepositoryPredicate"
+                project="org.eclipse.jdt.core"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </predicate>
+        </workingSet>
+      </setupTask>
+      <stream
+          name="master"
+          label="Master"/>
+    </project>
+    <project
+        name="testbinaries"
+        label="Test Binaries">
+      <setupTask
+          xsi:type="git:GitCloneTask"
+          id="github.clone.jdt.binaries"
+          remoteURI="eclipse-jdt/eclipse.jdt.core.binaries">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/InducedChoices">
+          <detail
+              key="inherit">
+            <value>github.remoteURIs</value>
+          </detail>
+          <detail
+              key="label">
+            <value>JDT Core Test Binaries Github Repository</value>
+          </detail>
+          <detail
+              key="target">
+            <value>remoteURI</value>
+          </detail>
+        </annotation>
+        <configSections
+            name="branch">
+          <properties
+              key="autoSetupRebase"
+              value="always"/>
+        </configSections>
+        <description>JDT Core Tests</description>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.targlets:TargletTask">
+        <targlet
+            name="JDT Core Test Binaries"
+            activeRepositoryList="${eclipse.target.platform}">
+          <requirement
+              name="org.eclipse.jdt.core.tests.binaries"/>
+          <sourceLocator
+              rootFolder="${github.clone.jdt.binaries.location}"/>
+        </targlet>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.workingsets:WorkingSetTask"
+          id="jdt.core.binaries.workingsets">
+        <workingSet
+            name="JDT Core Test Binaries">
+          <predicate
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jdt.core.tests.binaries"/>
+        </workingSet>
+      </setupTask>
+      <stream
+          name="master"
+          label="Master"/>
+      <description>The binaries for tests of the JDT Core project</description>
+    </project>
+    <stream
+        name="master"
+        label="Master"/>
+    <description>The core parts of the JDT project</description>
+  </project>
+  <project name="debug"
+      label="Debug">
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="github.clone.jdt.debug"
+        remoteURI="eclipse-jdt/eclipse.jdt.debug">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>github.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>JDT Debug Github Repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <configSections
+          name="branch">
+        <properties
+            key="autoSetupRebase"
+            value="always"/>
+      </configSections>
+      <description>JDT Core</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask">
+      <targlet
+          name="JDT Debug"
+          activeRepositoryList="${eclipse.target.platform}">
+        <requirement
+            name="*"/>
+        <sourceLocator
+            rootFolder="${github.clone.jdt.debug.location}">
+          <predicate
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </predicate>
+        </sourceLocator>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask"
+        id="jdt.debug.workingsets">
+      <workingSet
+          name="JDT Debug">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jdt.debug"/>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </operand>
+        </predicate>
+      </workingSet>
+    </setupTask>
+    <project
+        name="tests"
+        label="Tests">
+      <setupTask
+          xsi:type="setup.targlets:TargletTask">
+        <targlet
+            name="JDT Debug Tests"
+            activeRepositoryList="">
+          <requirement
+              name="*"/>
+          <sourceLocator
+              rootFolder="${github.clone.jdt.debug.location}">
+            <predicate
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </sourceLocator>
+        </targlet>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.workingsets:WorkingSetTask"
+          id="jdt.debug.tests.workingsets">
+        <workingSet
+            name="JDT Debug Tests">
+          <predicate
+              xsi:type="predicates:AndPredicate">
+            <operand
+                xsi:type="predicates:RepositoryPredicate"
+                project="org.eclipse.jdt.debug"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </predicate>
+        </workingSet>
+      </setupTask>
+      <stream
+          name="master"
+          label="Master"/>
+    </project>
+    <stream
+        name="master"
+        label="Master"/>
+    <description>The debug parts of the JDT project</description>
+  </project>
+  <project name="ui"
+      label="UI">
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="github.clone.jdt.ui"
+        remoteURI="eclipse-jdt/eclipse.jdt.ui">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>github.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>JDT UI Github Repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <configSections
+          name="branch">
+        <properties
+            key="autoSetupRebase"
+            value="always"/>
+      </configSections>
+      <description>JDT UI</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask">
+      <targlet
+          name="JDT UI"
+          activeRepositoryList="${eclipse.target.platform}">
+        <requirement
+            name="org.eclipse.jdt.astview.feature.feature.group"/>
+        <requirement
+            name="org.eclipse.jdt.jeview.feature.feature.group"/>
+        <sourceLocator
+            rootFolder="${github.clone.jdt.ui.location}"/>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask"
+        id="jdt.ui.workingsets">
+      <workingSet
+          name="JDT UI">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:RepositoryPredicate"
+              project="org.eclipse.jdt.ui"/>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*|.*examples.*|.*sampleproject.*"/>
+          </operand>
+        </predicate>
+      </workingSet>
+    </setupTask>
+    <project
+        name="tests"
+        label="Tests">
+      <setupTask
+          xsi:type="setup.targlets:TargletTask">
+        <targlet
+            name="JDT UI Tests">
+          <requirement
+              name="org.eclipse.jdt.text.tests"/>
+          <requirement
+              name="org.eclipse.jdt.ui.tests.refactoring"/>
+          <requirement
+              name="org.eclipse.jdt.ui.unittest.junit.feature.feature.group"/>
+        </targlet>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.workingsets:WorkingSetTask"
+          id="jdt.ui.tests.workingsets">
+        <workingSet
+            name="JDT UI Tests">
+          <predicate
+              xsi:type="predicates:AndPredicate">
+            <operand
+                xsi:type="predicates:RepositoryPredicate"
+                project="org.eclipse.jdt.ui"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*tests.*"/>
+          </predicate>
+        </workingSet>
+      </setupTask>
+      <stream
+          name="master"
+          label="Master"/>
+    </project>
+    <project
+        name="examples"
+        label="Examples">
+      <setupTask
+          xsi:type="setup:TextModifyTask"
+          excludedTriggers="BOOTSTRAP"
+          url="${github.clone.jdt.ui.location|uri}/org.eclipse.jdt.ui.junit.sampleproject/.project"
+          encoding="UTF-8">
+        <modification
+            pattern="(?im)(^[^&lt;].*maven.*$)">
+          <substitution>&lt;!-- \1 --></substitution>
+        </modification>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.targlets:TargletTask">
+        <targlet
+            name="JDT UI Examples">
+          <requirement
+              name="org.eclipse.jdt.ui.examples.javafamily"/>
+          <requirement
+              name="org.eclipse.jdt.ui.examples.projects"/>
+          <requirement
+              name="org.eclipse.jdt.ui.junit.sampleproject.plain.project"/>
+        </targlet>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.workingsets:WorkingSetTask"
+          id="jdt.ui.examples.workingsets">
+        <workingSet
+            name="JDT UI Examples">
+          <predicate
+              xsi:type="predicates:AndPredicate">
+            <operand
+                xsi:type="predicates:RepositoryPredicate"
+                project="org.eclipse.jdt.ui"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern=".*examples.*|.*sampleproject.*"/>
+          </predicate>
+        </workingSet>
+      </setupTask>
+      <stream
+          name="master"
+          label="Master"/>
+    </project>
+    <stream
+        name="master"
+        label="Master"/>
+    <description>The UI parts of the JDT project</description>
+  </project>
+  <logicalProjectContainer
+      xsi:type="setup:ProjectCatalog"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <description>The setups for the Java Development Tools projects</description>
+</setup:Project>
