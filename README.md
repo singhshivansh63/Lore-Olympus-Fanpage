@@ -1,8 +1,8 @@
-Lore Olympus Fanpage
-Project Description
+*Lore Olympus Fanpage*
+*Project Description*
 The Lore Olympus Fanpage is a web-based application designed for fans of the popular webcomic Lore Olympus. This fanpage allows users to engage with the content, explore character details, view comic updates, and immerse themselves in the vibrant world created by the comic’s author. The project showcases a simple, visually appealing interface and serves as a community hub for fans of the series.
 
-Features
+*Features*
 Home Page: Welcome page that introduces the fanpage, with an overview of the Lore Olympus webcomic.
 Character Profiles: Detailed profiles for major characters in the Lore Olympus universe.
 Comic Updates Section: A page that provides recent updates or highlights from the latest episodes of the webcomic.
